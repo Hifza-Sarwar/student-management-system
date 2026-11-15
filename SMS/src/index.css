@@ -1,54 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap");
-
-/* =====================================================
-   Student Management System - stylesheet
-   Direction: quiet, institutional. Warm paper background,
-   ink-blue primary, one brick accent, serif headings,
-   hairline borders instead of shadows.
-===================================================== */
-
 :root {
-  --paper: #f4f2ed;
-  --surface: #ffffff;
-  --ink: #1b2530;
-  --ink-soft: #46515d;
-  --muted: #66707c;
-  --placeholder: #8c95a1;
+  --primary-color: #314f73;
+  --primary-dark: #263f5d;
+  --heading-color: #263d5c;
+  --text-color: #718096;
+  --placeholder-color: #9aa9ba;
 
-  --line: #dedacf;
-  --line-soft: #ebe8df;
+  --background-color: #f4f7fb;
+  --card-color: #ffffff;
 
-  --primary: #1f4259;
-  --primary-dark: #163246;
-  --primary-tint: #eaf0f4;
-  --accent: #b5532f;
+  --border-color: #d7dee8;
+  --focus-color: #48698f;
 
-  --danger: #a63a2b;
-  --danger-line: #e3c3bc;
-  --ok: #2f6b4f;
-
-  --focus-ring: rgba(31, 66, 89, 0.18);
-
-  --radius: 6px;
-  --radius-sm: 4px;
-
-  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-
-  /* kept so older references still work */
-  --primary-color: var(--primary);
-  --heading-color: var(--ink);
-  --text-color: var(--muted);
-  --background-color: var(--paper);
-  --card-color: var(--surface);
-  --border-color: var(--line);
-  --focus-color: var(--primary);
-  --border-radius: var(--radius);
-  --card-radius: var(--radius);
+  --border-radius: 8px;
+  --card-radius: 16px;
 }
 
 /* =========================
-   Base
+   Global Reset
 ========================= */
 
 * {
@@ -64,551 +32,92 @@ body,
 }
 
 body {
-  font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.5;
-  background-color: var(--paper);
-  color: var(--ink-soft);
-  -webkit-font-smoothing: antialiased;
-}
-
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-h1,
-h2 {
-  font-family: var(--serif);
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-
-a {
-  color: var(--primary);
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* =========================
-   Page wrappers and content width
+   Login Page
 ========================= */
 
-.profile-page,
-.courses-page,
-.results-page,
-.attendance-page,
-.students-page,
-.manage-courses-page,
-.manage-results-page,
-.manage-attendance-page,
-.dashboard,
-.admin-dashboard {
-  flex: 1;
-  min-width: 0;
-}
-
-/* Layout shell: sidebar beside the page area */
-.dashboard-content,
-.admin-content {
-  display: flex;
-  align-items: stretch;
-}
-
-.dashboard-main,
-.admin-main {
-  flex: 1;
-  min-width: 0;
-}
-
-/* The dashboard pages render their own nested wrapper inside the layout's
-   <main>, so only the nested one gets the width limit and padding */
-.dashboard-main .dashboard-content,
-.admin-main .admin-content {
-  display: block;
-}
-
-.dashboard-main .dashboard-main,
-.admin-main .admin-main,
-.profile-content,
-.courses-content,
-.results-content,
-.attendance-content,
-.students-content,
-.manage-courses-content,
-.manage-results-content,
-.manage-attendance-content {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 36px 40px 56px;
-}
-
-/* =========================
-   Page headers
-========================= */
-
-.profile-header,
-.courses-header,
-.results-header,
-.attendance-header,
-.students-header,
-.manage-courses-header,
-.manage-results-header,
-.manage-attendance-header,
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid var(--line);
-}
-
-.profile-header h1,
-.courses-header h1,
-.results-header h1,
-.attendance-header h1,
-.students-header h1,
-.manage-courses-header h1,
-.manage-results-header h1,
-.manage-attendance-header h1,
-.admin-header h1,
-.dashboard-main > h1 {
-  font-size: 30px;
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-
-.profile-header p,
-.courses-header p,
-.results-header p,
-.attendance-header p,
-.students-header p,
-.manage-courses-header p,
-.manage-results-header p,
-.manage-attendance-header p,
-.admin-header p,
-.dashboard-main > p {
-  color: var(--muted);
-  font-size: 15px;
-}
-
-/* the student dashboard has its heading directly in <main> */
-.dashboard-main > h1 {
-  margin-bottom: 4px;
-}
-
-.dashboard-main > p {
-  padding-bottom: 20px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid var(--line);
-}
-
-/* =========================
-   Cards
-========================= */
-
-.login-card,
-.register-card,
-.profile-card,
-.course-card,
-.courses-card,
-.results-card,
-.attendance-card,
-.students-card,
-.manage-courses-card,
-.manage-results-card,
-.manage-attendance-card {
-  background-color: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 24px;
-}
-
-.results-card + .results-card,
-.manage-results-card + .manage-results-card,
-.manage-attendance-card + .manage-attendance-card,
-.manage-courses-card + .manage-courses-card,
-.attendance-card + .attendance-card {
-  margin-top: 20px;
-}
-
-.manage-attendance-card > h2 {
-  font-size: 19px;
-  margin-bottom: 16px;
-}
-
-/* =========================
-   Tables
-========================= */
-
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.table-container > p {
-  padding: 36px 0;
-  text-align: center;
-  color: var(--muted);
-}
-
-.table-container table {
-  width: 100%;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-
-.table-container th {
-  text-align: left;
-  padding: 10px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  white-space: nowrap;
-  border-bottom: 1px solid var(--ink);
-}
-
-.table-container td {
-  padding: 14px;
-  font-size: 14px;
-  color: var(--ink-soft);
-  border-bottom: 1px solid var(--line-soft);
-  vertical-align: middle;
-}
-
-.table-container tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.table-container tbody tr:hover {
-  background-color: #faf9f5;
-}
-
-.table-container td:first-child {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.course-actions,
-.student-actions,
-.result-actions {
-  white-space: nowrap;
-}
-
-.course-actions button + button,
-.student-actions button + button,
-.result-actions button + button {
-  margin-left: 8px;
-}
-
-.result-status,
-.attendance-status {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background-color: var(--primary-tint);
-  color: var(--primary);
-  border: 1px solid #c5d3dd;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-/* =========================
-   Buttons
-========================= */
-
-/* primary */
-.add-student-btn,
-.add-course-btn,
-.add-result-btn,
-.save-attendance-btn,
-.save-btn,
-.edit-profile-btn,
-.login-card button,
-.register-card button,
-.course-card button,
-.manage-courses-card form button[type="submit"],
-.manage-results-card form button[type="submit"] {
-  height: 40px;
-  padding: 0 18px;
-  background-color: var(--primary);
-  color: #fff;
-  border: 1px solid var(--primary);
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.15s, border-color 0.15s;
-}
-
-.add-student-btn:hover,
-.add-course-btn:hover,
-.add-result-btn:hover,
-.save-attendance-btn:hover,
-.save-btn:hover,
-.edit-profile-btn:hover,
-.login-card button:hover,
-.register-card button:hover,
-.course-card button:hover,
-.manage-courses-card form button[type="submit"]:hover,
-.manage-results-card form button[type="submit"]:hover {
-  background-color: var(--primary-dark);
-  border-color: var(--primary-dark);
-}
-
-.login-card button,
-.register-card button {
-  width: 100%;
-  height: 44px;
-  margin-top: 6px;
-}
-
-/* secondary */
-.cancel-btn,
-.edit-btn,
-.edit-course-btn,
-.edit-result-btn,
-.edit-profile-btn + .edit-profile-btn,
-.manage-courses-card form button[type="button"],
-.manage-results-card form button[type="button"] {
-  height: 40px;
-  padding: 0 18px;
-  background-color: transparent;
-  color: var(--primary);
-  border: 1px solid #b4c3cf;
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.15s;
-}
-
-.cancel-btn:hover,
-.edit-btn:hover,
-.edit-course-btn:hover,
-.edit-result-btn:hover,
-.edit-profile-btn + .edit-profile-btn:hover,
-.manage-courses-card form button[type="button"]:hover,
-.manage-results-card form button[type="button"]:hover {
-  background-color: var(--primary-tint);
-  border-color: var(--primary);
-}
-
-.cancel-btn {
-  color: var(--ink-soft);
-}
-
-/* destructive */
-.delete-btn,
-.delete-course-btn,
-.delete-result-btn,
-.delete-attendance-btn {
-  height: 40px;
-  padding: 0 18px;
-  background-color: transparent;
-  color: var(--danger);
-  border: 1px solid var(--danger-line);
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
-}
-
-.delete-btn:hover,
-.delete-course-btn:hover,
-.delete-result-btn:hover,
-.delete-attendance-btn:hover {
-  background-color: var(--danger);
-  border-color: var(--danger);
-  color: #fff;
-}
-
-/* compact buttons inside tables */
-.edit-btn,
-.delete-btn,
-.edit-course-btn,
-.delete-course-btn,
-.edit-result-btn,
-.delete-result-btn,
-.delete-attendance-btn {
-  height: 30px;
-  padding: 0 12px;
-  font-size: 13px;
-}
-
-.profile-card .edit-profile-btn {
-  margin-top: 28px;
-}
-
-.profile-card .edit-profile-btn + .edit-profile-btn {
-  margin-left: 10px;
-}
-
-/* =========================
-   Forms
-========================= */
-
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.form-group input,
-.form-group select,
-.filter-group input,
-.filter-group select,
-.profile-field input,
-.students-actions input,
-.courses-actions input {
-  width: 100%;
-  height: 42px;
-  padding: 0 12px;
-  background-color: var(--surface);
-  color: var(--ink);
-  border: 1px solid #cdc8bb;
-  border-radius: var(--radius-sm);
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-.form-group input::placeholder,
-.students-actions input::placeholder,
-.courses-actions input::placeholder {
-  color: var(--placeholder);
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.filter-group input:focus,
-.filter-group select:focus,
-.profile-field input:focus,
-.students-actions input:focus,
-.courses-actions input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.form-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: var(--ink);
-}
-
-.form-checkbox input {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary);
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line-soft);
-}
-
-/* Add / edit forms that sit inside a card (manage courses and results):
-   one wrapping row of fields instead of a long stack */
-.manage-courses-card form,
-.manage-results-card form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 16px;
-}
-
-.manage-courses-card form .form-group,
-.manage-results-card form .form-group {
-  flex: 1 1 200px;
-  margin-bottom: 0;
-}
-
-/* search bars */
-.students-actions,
-.courses-actions {
-  margin-bottom: 18px;
-}
-
-.students-actions input,
-.courses-actions input {
-  max-width: 360px;
-}
-
-/* =========================
-   Login and Register
-========================= */
-
-.login-page,
-.register-page {
+.login-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-  background-color: var(--paper);
-}
-
-.login-card,
-.register-card {
-  width: 100%;
-  padding: 40px 36px 32px;
-  border-top: 3px solid var(--primary);
+  padding: 20px;
+  background-color: var(--background-color);
 }
 
 .login-card {
+  width: 100%;
   max-width: 420px;
+  background-color: var(--card-color);
+  padding: 35px;
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
-.register-card {
-  max-width: 450px;
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.login-header,
-.register-header {
-  margin-bottom: 28px;
-}
-
-.login-header h1,
-.register-header h1 {
+.login-header h1 {
+  color: var(--heading-color);
   font-size: 28px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.login-header p,
-.register-header p {
-  color: var(--muted);
+.login-header p {
+  color: var(--text-color);
+  font-size: 15px;
 }
 
-.register-card .form-group {
-  margin-bottom: 16px;
+/* =========================
+   Form
+========================= */
+
+.form-group {
+  margin-bottom: 20px;
 }
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--heading-color);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  height: 46px;
+  padding: 0 13px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  border-color: var(--focus-color);
+}
+
+.form-group input::placeholder {
+  color: var(--placeholder-color);
+}
+
+/* =========================
+   Login Options
+========================= */
 
 .login-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 4px 0 20px;
+  margin: 5px 0 22px;
   font-size: 13px;
 }
 
@@ -616,59 +125,191 @@ a {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--ink-soft);
+  color: var(--text-color);
 }
 
 .login-options input {
-  accent-color: var(--primary);
+  accent-color: var(--primary-color);
 }
 
 .login-options a,
-.register a,
-.register-login a {
-  color: var(--primary);
-  font-weight: 600;
+.register a {
+  color: var(--primary-color);
   text-decoration: none;
-}
-
-.login-options a:hover,
-.register a:hover,
-.register-login a:hover {
-  text-decoration: underline;
-}
-
-.register,
-.register-login {
-  text-align: center;
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line-soft);
-  font-size: 14px;
-  color: var(--muted);
+  font-weight: 600;
 }
 
 /* =========================
-   Navbar
+   Button
 ========================= */
 
+.login-card button {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-card button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* =========================
+   Register
+========================= */
+
+.register {
+  text-align: center;
+  margin-top: 22px;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 25px 20px;
+  }
+
+  .login-header h1 {
+    font-size: 24px;
+  }
+
+  .login-options {
+    font-size: 12px;
+  }
+}
+/* =========================
+   Register Page
+========================= */
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--background-color);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  background-color: var(--card-color);
+  padding: 35px;
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.register-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.register-header p {
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+.register-card .form-group {
+  margin-bottom: 17px;
+}
+
+.register-card .form-group input {
+  height: 44px;
+}
+
+.register-card button {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 3px;
+}
+
+.register-card button:hover {
+  background-color: var(--primary-dark);
+}
+
+.register-login {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.register-login a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Register Responsive */
+
+@media (max-width: 480px) {
+  .register-page {
+    padding: 15px;
+  }
+
+  .register-card {
+    padding: 25px 20px;
+  }
+
+  .register-header h1 {
+    font-size: 24px;
+  }
+}
 .navbar {
-  height: 64px;
+  height: 70px;
+  background-color: var(--card-color);
+  border-bottom: 1px solid var(--border-color);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  background-color: var(--surface);
-  border-bottom: 1px solid var(--line);
+
+  padding: 0 30px;
 }
 
 .navbar-left h2 {
-  font-size: 19px;
+  color: var(--heading-color);
+  font-size: 20px;
 }
 
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 25px;
+}
+
+.notification {
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .student-info {
@@ -678,400 +319,375 @@ a {
 }
 
 .avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+
+  background-color: var(--primary-color);
+  color: white;
+
+  border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--ink);
-  color: #fff;
-  border-radius: 50%;
-  font-size: 14px;
-  font-weight: 600;
+
+  font-weight: bold;
 }
 
 .student-info h4 {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--ink);
+  color: var(--heading-color);
+  margin-bottom: 2px;
 }
 
 .student-info p {
+  color: var(--text-color);
   font-size: 12px;
-  text-transform: capitalize;
-  color: var(--muted);
 }
 
+
 /* =========================
-   Sidebar (student and admin)
+   Dashboard
+========================= */
+
+.dashboard {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+/* Dashboard Content */
+
+.dashboard-content {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+/* Sidebar */
+
+/* =========================
+   SIDEBAR
 ========================= */
 
 .sidebar {
-  width: 232px;
-  min-height: calc(100vh - 64px);
-  padding: 24px 0;
-  background-color: #1a2430;
-  flex-shrink: 0;
+  width: 220px;
+  min-height: calc(100vh - 70px);
+  background-color: var(--card-color);
+  border-right: 1px solid var(--border-color);
+  padding: 20px 15px;
 }
 
 .sidebar h3 {
-  padding: 0 24px;
-  margin-bottom: 14px;
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #8fa0b0;
+  color: var(--heading-color);
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .sidebar ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 5px;
 }
 
 .sidebar li a {
   display: block;
-  padding: 10px 24px;
-  border-left: 3px solid transparent;
-  color: #c6d0da;
-  font-size: 14px;
+  padding: 10px 12px;
+  color: var(--text-color);
   text-decoration: none;
-  transition: background-color 0.15s, color 0.15s;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  transition: 0.3s;
 }
 
 .sidebar li a:hover {
-  background-color: rgba(255, 255, 255, 0.06);
-  color: #fff;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .sidebar li a.active {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-left-color: var(--accent);
-  color: #fff;
-  font-weight: 500;
+  background-color: var(--primary-color);
+  color: white;
+}
+/* Main Dashboard */
+
+.dashboard-main {
+  flex: 1;
+  padding: 35px;
 }
 
-.sidebar li:last-child {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+.dashboard-main h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
 }
 
-/* =========================
-   Dashboards: stat strips
-========================= */
+.dashboard-main > p {
+  color: var(--text-color);
+  margin-bottom: 30px;
+}
 
-.admin-stats,
-.dashboard-cards,
-.attendance-summary {
+/* Dashboard Cards */
+
+.dashboard-cards {
   display: grid;
-  gap: 1px;
-  background-color: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.admin-stats {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.dashboard-cards,
-.attendance-summary {
   grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.admin-stat-card,
-.dashboard-card,
-.attendance-summary-card {
-  padding: 22px 24px;
-  background-color: var(--surface);
+.dashboard-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
 }
 
-.admin-stat-card h3,
-.dashboard-card h3,
-.attendance-summary-card span {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-}
-
-.admin-stat-card h2,
-.dashboard-card h2,
-.attendance-summary-card h2 {
-  margin: 0 0 4px;
-  font-size: 36px;
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink);
-}
-
-.admin-stat-card p,
-.dashboard-card p {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* =========================
-   Dashboards: recent lists
-========================= */
-
-.recent-students,
-.recent-section {
-  margin-top: 36px;
-}
-
-.recent-students h2,
-.recent-section h2 {
-  font-size: 20px;
+.dashboard-card h3 {
+  color: var(--text-color);
+  font-size: 15px;
   margin-bottom: 12px;
 }
 
-.student-list,
+.dashboard-card h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.dashboard-card p {
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+/* Recent Courses */
+
+.recent-section {
+  margin-top: 35px;
+}
+
+.recent-section h2 {
+  color: var(--heading-color);
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
 .course-list {
-  background-color: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
   overflow: hidden;
 }
 
-.student-list div,
 .course-list div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--line-soft);
-  color: var(--ink-soft);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
 }
 
-.student-list div:last-child,
 .course-list div:last-child {
   border-bottom: none;
 }
 
-.student-list div:hover,
 .course-list div:hover {
-  background-color: #faf9f5;
+  background-color: var(--background-color);
 }
 
-.student-list strong {
-  color: var(--ink);
-  font-weight: 500;
+/* Responsive */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 190px;
+  }
+
+  .dashboard-main {
+    padding: 25px;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
-.student-list span {
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
+@media (max-width: 600px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar ul {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+  }
+
+  .sidebar li {
+    white-space: nowrap;
+  }
+
+  .dashboard-main {
+    padding: 20px;
+  }
+
+  .dashboard-main h1 {
+    font-size: 23px;
+  }
 }
-
-/* 
-   Results summary
-*/
-
-.results-summary {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.results-summary > div {
-  padding: 4px 8px;
-}
-
-.results-summary > div + div {
-  padding-left: 28px;
-  border-left: 1px solid var(--line);
-}
-
-.results-summary span {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-}
-
-.results-summary h2 {
-  margin-top: 6px;
-  font-size: 34px;
-  font-variant-numeric: tabular-nums;
-}
-
-/* 
+/* =========================
    Profile
- */
+========================= */
+
+.profile-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.profile-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.profile-header {
+  margin-bottom: 30px;
+}
+
+.profile-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.profile-header p {
+  color: var(--text-color);
+}
+
+/* Profile Card */
 
 .profile-card {
   position: relative;
-  padding: 32px;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 35px;
 }
 
+/* Avatar */
+
 .profile-avatar {
-  width: 72px;
-  height: 72px;
-  margin-bottom: 28px;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 30px;
+
+  background-color: var(--primary-color);
+  color: white;
+
+  border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--ink);
-  color: #fff;
-  border-radius: 50%;
-  font-family: var(--serif);
-  font-size: 30px;
-  font-weight: 600;
+
+  font-size: 32px;
+  font-weight: bold;
 }
+
+/* Profile Information */
 
 .profile-info {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0 40px;
+  gap: 25px;
 }
 
 .profile-field {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line-soft);
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
 }
 
 .profile-field span {
   display: block;
-  margin-bottom: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--muted);
+  color: var(--text-color);
+  font-size: 13px;
+  margin-bottom: 7px;
 }
 
 .profile-field p {
-  font-size: 16px;
-  color: var(--ink);
-}
-
-/* 
-   Attendance filters and radios */
-
-.attendance-filters {
-  display: flex;
-  gap: 20px;
-  padding: 18px 20px;
-  margin-bottom: 20px;
-  background-color: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 260px;
-}
-
-.filter-group label {
-  font-size: 13px;
+  color: var(--heading-color);
   font-weight: 600;
-  color: var(--ink);
 }
 
-.attendance-options {
-  display: flex;
-  gap: 22px;
-}
+/* Edit Button */
 
-.attendance-options label {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 14px;
-  color: var(--ink-soft);
-  cursor: pointer;
-}
+.edit-profile-btn {
+  margin-top: 30px;
+  padding: 11px 22px;
 
-.attendance-options input {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
+  background-color: var(--primary-color);
+  color: white;
 
-/* 
-   Modals (students and courses) */
-
-.student-modal,
-.course-modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(20, 28, 36, 0.55);
-  z-index: 1000;
-}
-
-.student-modal-content,
-.course-modal-content {
-  width: 520px;
-  max-width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 28px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  border-top: 3px solid var(--primary);
-  box-shadow: 0 20px 50px rgba(20, 28, 36, 0.25);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  padding-bottom: 16px;
-  margin-bottom: 22px;
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.modal-header h2 {
-  margin: 0 0 4px;
-  font-size: 22px;
-}
-
-.modal-header p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.close-modal-btn {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: none;
-  background: transparent;
-  border-radius: var(--radius-sm);
-  font-size: 24px;
-  line-height: 1;
-  color: var(--muted);
+  border-radius: var(--border-radius);
+
   cursor: pointer;
+  font-size: 14px;
 }
 
-.close-modal-btn:hover {
-  background-color: var(--line-soft);
-  color: var(--ink);
+.edit-profile-btn:hover {
+  background-color: var(--primary-dark);
 }
 
-/*Course card (grid layout, if used) */
+/* Responsive */
+
+@media (max-width: 600px) {
+  .profile-content {
+    padding: 25px 20px;
+  }
+
+  .profile-card {
+    padding: 25px;
+  }
+
+  .profile-info {
+    grid-template-columns: 1fr;
+  }
+}
+/* =========================
+   Courses
+========================= */
+
+.courses-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.courses-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.courses-header {
+  margin-bottom: 30px;
+}
+
+.courses-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.courses-header p {
+  color: var(--text-color);
+}
+
+/* Courses Grid */
 
 .courses-grid {
   display: grid;
@@ -1079,70 +695,1532 @@ a {
   gap: 20px;
 }
 
+/* Course Card */
+
+.course-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+}
+
 .course-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.course-top span {
+  color: var(--text-color);
   font-size: 13px;
-  color: var(--muted);
 }
 
 .course-top span:first-child {
-  color: var(--accent);
-  font-weight: 600;
+  color: var(--primary-color);
+  font-weight: bold;
 }
 
 .course-card h2 {
+  color: var(--heading-color);
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .course-card p {
-  margin-bottom: 18px;
+  color: var(--text-color);
   font-size: 14px;
+  margin-bottom: 20px;
 }
 
 .course-card p strong {
-  color: var(--ink);
+  color: var(--heading-color);
 }
 
-/* 
-   Responsive
-*/
+.course-card button {
+  padding: 10px 18px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
 
-@media (max-width: 1000px) {
+.course-card button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .courses-content {
+    padding: 25px 20px;
+  }
+}
+
+/* =========================
+   Results
+========================= */
+
+.results-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.results-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.results-header {
+  margin-bottom: 30px;
+}
+
+.results-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.results-header p {
+  color: var(--text-color);
+}
+
+/* Results Card */
+
+.results-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+}
+
+/* Summary */
+
+.results-summary {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.results-summary > div {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.results-summary span {
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+.results-summary h2 {
+  color: var(--primary-color);
+  font-size: 26px;
+  margin-top: 8px;
+}
+
+/* Table */
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th {
+  background-color: var(--background-color);
+  color: var(--heading-color);
+  text-align: left;
+  padding: 14px 15px;
+  font-size: 14px;
+}
+
+.table-container td {
+  color: var(--text-color);
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+
+.table-container tbody tr:hover {
+  background-color: var(--background-color);
+}
+
+.result-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 12px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .results-content {
+    padding: 25px 20px;
+  }
+
+  .results-card {
+    padding: 15px;
+  }
+
+  .results-summary {
+    flex-direction: column;
+  }
+
+  .results-header h1 {
+    font-size: 23px;
+  }
+}
+/* =========================
+   Attendance
+========================= */
+
+.attendance-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.attendance-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.attendance-header {
+  margin-bottom: 30px;
+}
+
+.attendance-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.attendance-header p {
+  color: var(--text-color);
+}
+
+/* Summary Cards */
+
+.attendance-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.attendance-summary-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+}
+
+.attendance-summary-card span {
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+.attendance-summary-card h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-top: 8px;
+}
+
+/* Attendance Table */
+
+.attendance-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+}
+
+.attendance-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 12px;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .attendance-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .attendance-content {
+    padding: 25px 20px;
+  }
+
+  .attendance-card {
+    padding: 15px;
+  }
+
+  .attendance-header h1 {
+    font-size: 23px;
+  }
+}
+/* =========================
+   Admin Dashboard
+========================= */
+
+.admin-dashboard {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.admin-content {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+/* Admin Sidebar */
+
+.admin-sidebar {
+  width: 230px;
+  background-color: var(--card-color);
+  border-right: 1px solid var(--border-color);
+  padding: 25px 15px;
+}
+
+.admin-sidebar h3 {
+  color: var(--heading-color);
+  font-size: 16px;
+  margin-bottom: 25px;
+  padding-left: 10px;
+}
+
+.admin-sidebar ul {
+  list-style: none;
+}
+
+.admin-sidebar li {
+  padding: 12px 10px;
+  margin-bottom: 5px;
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.admin-sidebar li:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.admin-sidebar li:first-child {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Admin Main */
+
+.admin-main {
+  flex: 1;
+  padding: 35px;
+}
+
+.admin-header {
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.admin-header p {
+  color: var(--text-color);
+}
+
+/* Statistics */
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.admin-stat-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+}
+
+.admin-stat-card h3 {
+  color: var(--text-color);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.admin-stat-card h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.admin-stat-card p {
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+/* Recent Students */
+
+.recent-students {
+  margin-top: 35px;
+}
+
+.recent-students h2 {
+  color: var(--heading-color);
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.student-list {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+.student-list div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.student-list div:last-child {
+  border-bottom: none;
+}
+
+.student-list div:hover {
+  background-color: var(--background-color);
+}
+
+.student-list strong {
+  color: var(--heading-color);
+}
+
+.student-list span {
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
   .admin-stats {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 800px) {
-  .dashboard-main .dashboard-main,
-  .admin-main .admin-main,
-  .profile-content,
-  .courses-content,
-  .results-content,
-  .attendance-content,
-  .students-content,
-  .manage-courses-content,
-  .manage-results-content,
-  .manage-attendance-content {
-    padding: 26px 20px 40px;
+@media (max-width: 600px) {
+  .admin-content {
+    flex-direction: column;
   }
 
-  .students-header,
-  .manage-courses-header,
-  .manage-results-header,
-  .manage-attendance-header,
-  .courses-header {
+  .admin-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .admin-sidebar ul {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+  }
+
+  .admin-sidebar li {
+    white-space: nowrap;
+  }
+
+  .admin-main {
+    padding: 25px 20px;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header h1 {
+    font-size: 23px;
+  }
+}
+
+
+/* =========================
+   Students Management
+========================= */
+
+.students-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.students-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+/* Header */
+
+.students-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.students-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.students-header p {
+  color: var(--text-color);
+}
+
+/* Add Student Button */
+
+.add-student-btn {
+  padding: 11px 18px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-student-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Search */
+
+.students-actions {
+  margin-bottom: 20px;
+}
+
+.students-actions input {
+  width: 100%;
+  max-width: 350px;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  background-color: var(--card-color);
+  color: var(--heading-color);
+}
+
+.students-actions input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.students-actions input:focus {
+  border-color: var(--focus-color);
+}
+
+/* Students Table */
+
+.students-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+}
+
+.students-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-card th {
+  background-color: var(--background-color);
+  color: var(--heading-color);
+  text-align: left;
+  padding: 14px 15px;
+  font-size: 14px;
+}
+
+.students-card td {
+  color: var(--text-color);
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+
+.students-card tbody tr:hover {
+  background-color: var(--background-color);
+}
+
+/* Action Buttons */
+
+.student-actions {
+  white-space: nowrap;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 7px 12px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.edit-btn {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  margin-right: 7px;
+}
+
+.edit-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.delete-btn {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.delete-btn:hover {
+  background-color: var(--primary-dark);
+  color: white;
+  border-color: var(--primary-dark);
+}
+/* =========================
+   STUDENT MODAL
+========================= */
+
+.student-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
+}
+
+.student-modal-content {
+  width: 500px;
+  max-width: 90%;
+
+  background: white;
+  border-radius: 12px;
+
+  padding: 28px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 25px;
+}
+
+.modal-header h2 {
+  margin: 0 0 5px;
+}
+
+.modal-header p {
+  margin: 0;
+  color: #777;
+}
+
+.close-modal-btn {
+  border: none;
+  background: transparent;
+
+  font-size: 28px;
+  cursor: pointer;
+
+  color: #555;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #d7d7d7;
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #1e3a8a;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 22px;
+}
+
+.form-checkbox input {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* =========================
+   FORM BUTTONS
+========================= */
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 10px;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 10px 18px;
+
+  border-radius: 7px;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background: #eeeeee;
+  color: #333;
+}
+
+.save-btn {
+  background: #1e3a8a;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #172f72;
+}
+
+
+/* =========================
+   TABLE BUTTONS
+========================= */
+
+.edit-btn,
+.delete-btn {
+  padding: 7px 12px;
+
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #e8eefc;
+  color: #1e3a8a;
+
+  margin-right: 7px;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.edit-btn:hover {
+  background: #dbe5fb;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .students-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .students-header h1 {
+    font-size: 24px;
+  }
+
+  .students-card {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .students-content {
+    padding: 25px 20px;
+  }
+
+  .students-header {
+    flex-direction: column;
+  }
+
+  .add-student-btn {
+    width: 100%;
+  }
+}
+/* =========================
+   MANAGE COURSES
+========================= */
+
+.manage-courses-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.manage-courses-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 35px 30px;
+}
+
+.manage-courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.manage-courses-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.manage-courses-header p {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+/* Add Course Button */
+
+.add-course-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-course-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Courses Card */
+
+.manage-courses-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Table */
+
+.manage-courses-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.manage-courses-card th {
+  text-align: left;
+  padding: 15px;
+  background-color: var(--background-color);
+  color: var(--heading-color);
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.manage-courses-card td {
+  padding: 15px;
+  color: var(--text-color);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.manage-courses-card tr:last-child td {
+  border-bottom: none;
+}
+
+.manage-courses-card tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Action Buttons */
+
+.course-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-course-btn,
+.delete-course-btn {
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit-course-btn {
+  background-color: #e8eef6;
+  color: var(--primary-color);
+}
+
+.edit-course-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.delete-course-btn {
+  background-color: #fce8e8;
+  color: #c53030;
+}
+
+.delete-course-btn:hover {
+  background-color: #c53030;
+  color: white;
+}
+/* =========================
+   COURSE MODAL
+========================= */
+
+.course-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
+}
+
+.course-modal-content {
+  width: 500px;
+  max-width: 90%;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 28px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 25px;
+}
+
+.modal-header h2 {
+  margin: 0 0 5px;
+}
+
+.modal-header p {
+  margin: 0;
+
+  color: #777;
+}
+
+.close-modal-btn {
+  border: none;
+
+  background: transparent;
+
+  font-size: 28px;
+
+  cursor: pointer;
+
+  color: #555;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #d7d7d7;
+
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #1e3a8a;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.form-buttons {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 10px 18px;
+
+  border-radius: 7px;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background: #eeeeee;
+
+  color: #333;
+}
+
+.save-btn {
+  background: #1e3a8a;
+
+  color: white;
+}
+
+.save-btn:hover {
+  background: #172f72;
+}
+
+
+/* =========================
+   TABLE BUTTONS
+========================= */
+
+.edit-btn,
+.delete-btn {
+  padding: 7px 12px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #e8eefc;
+
+  color: #1e3a8a;
+
+  margin-right: 7px;
+}
+
+.delete-btn {
+  background: #fee2e2;
+
+  color: #b91c1c;
+}
+
+.edit-btn:hover {
+  background: #dbe5fb;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .manage-courses-content {
+    padding: 25px 20px;
+  }
+
+  .manage-courses-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 15px;
   }
 
-  .add-student-btn,
-  .add-course-btn,
-  .add-result-btn,
+  .add-course-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .manage-courses-content {
+    padding: 20px 15px;
+  }
+
+  .manage-courses-header h1 {
+    font-size: 24px;
+  }
+
+  .manage-courses-card {
+    padding: 15px;
+  }
+
+  .course-actions {
+    flex-direction: column;
+  }
+
+  .edit-course-btn,
+  .delete-course-btn {
+    width: 100%;
+  }
+}
+/* =========================
+   MANAGE RESULTS
+========================= */
+
+.manage-results-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.manage-results-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 35px 30px;
+}
+
+.manage-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.manage-results-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.manage-results-header p {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+/* Add Result Button */
+
+.add-result-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-result-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Results Card */
+
+.manage-results-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Table */
+
+.manage-results-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.manage-results-card th {
+  text-align: left;
+  padding: 15px;
+  background-color: var(--background-color);
+  color: var(--heading-color);
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.manage-results-card td {
+  padding: 15px;
+  color: var(--text-color);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.manage-results-card tr:last-child td {
+  border-bottom: none;
+}
+
+.manage-results-card tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Action Buttons */
+
+.result-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-result-btn,
+.delete-result-btn {
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit-result-btn {
+  background-color: #e8eef6;
+  color: var(--primary-color);
+}
+
+.edit-result-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.delete-result-btn {
+  background-color: #fce8e8;
+  color: #c53030;
+}
+
+.delete-result-btn:hover {
+  background-color: #c53030;
+  color: white;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .manage-results-content {
+    padding: 25px 20px;
+  }
+
+  .manage-results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .add-result-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .manage-results-content {
+    padding: 20px 15px;
+  }
+
+  .manage-results-header h1 {
+    font-size: 24px;
+  }
+
+  .manage-results-card {
+    padding: 15px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .edit-result-btn,
+  .delete-result-btn {
+    width: 100%;
+  }
+}
+
+/* =========================
+   MANAGE ATTENDANCE
+========================= */
+
+.manage-attendance-page {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.manage-attendance-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 35px 30px;
+}
+
+.manage-attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.manage-attendance-header h1 {
+  color: var(--heading-color);
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.manage-attendance-header p {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+/* Save Button */
+
+.save-attendance-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.save-attendance-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Filters */
+
+.attendance-filters {
+  display: flex;
+  gap: 20px;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 250px;
+}
+
+.filter-group label {
+  color: var(--heading-color);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 11px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: white;
+  color: var(--text-color);
+  font-size: 14px;
+  outline: none;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+  border-color: var(--focus-color);
+}
+
+/* Attendance Card */
+
+.manage-attendance-card {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Table */
+
+.manage-attendance-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.manage-attendance-card th {
+  text-align: left;
+  padding: 15px;
+  background-color: var(--background-color);
+  color: var(--heading-color);
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.manage-attendance-card td {
+  padding: 15px;
+  color: var(--text-color);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.manage-attendance-card tr:last-child td {
+  border-bottom: none;
+}
+
+.manage-attendance-card tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Attendance Options */
+
+.attendance-options {
+  display: flex;
+  gap: 20px;
+}
+
+.attendance-options label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+.attendance-options input {
+  cursor: pointer;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .manage-attendance-content {
+    padding: 25px 20px;
+  }
+
+  .manage-attendance-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
   .save-attendance-btn {
     width: 100%;
   }
@@ -1154,132 +2232,23 @@ a {
   .filter-group {
     width: 100%;
   }
-
-  .dashboard-cards,
-  .attendance-summary {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-info {
-    grid-template-columns: 1fr;
-  }
-
-  .courses-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
-@media (max-width: 700px) {
-  .navbar {
-    padding: 0 16px;
+@media (max-width: 600px) {
+  .manage-attendance-content {
+    padding: 20px 15px;
   }
 
-  .navbar-left h2 {
-    font-size: 16px;
+  .manage-attendance-header h1 {
+    font-size: 24px;
   }
 
-  .student-info div:last-child {
-    display: none;
-  }
-
-  /* sidebar goes on top of the page instead of beside it */
-  .dashboard-content,
-  .admin-content {
-    flex-direction: column;
-  }
-
-  .dashboard-main .dashboard-content,
-  .admin-main .admin-content {
-    display: block;
-  }
-
-  /* sidebar becomes a scrolling tab strip */
-  .sidebar {
-    width: 100%;
-    min-height: 0;
-    padding: 0 8px;
-  }
-
-  .sidebar h3 {
-    display: none;
-  }
-
-  .sidebar ul {
-    display: flex;
-    overflow-x: auto;
-  }
-
-  .sidebar li {
-    white-space: nowrap;
-  }
-
-  .sidebar li a {
-    padding: 14px 14px;
-    border-left: none;
-    border-bottom: 3px solid transparent;
-  }
-
-  .sidebar li a.active {
-    background-color: transparent;
-    border-bottom-color: var(--accent);
-  }
-
-  .sidebar li:last-child {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-  }
-
-  .admin-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .results-summary {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .results-summary > div + div {
-    padding: 16px 8px 4px;
-    border-left: none;
-    border-top: 1px solid var(--line);
-  }
-
-  .profile-header h1,
-  .courses-header h1,
-  .results-header h1,
-  .attendance-header h1,
-  .students-header h1,
-  .manage-courses-header h1,
-  .manage-results-header h1,
-  .manage-attendance-header h1,
-  .admin-header h1,
-  .dashboard-main > h1 {
-    font-size: 25px;
-  }
-
-  .login-card,
-  .register-card {
-    padding: 30px 22px 24px;
+  .manage-attendance-card {
+    padding: 15px;
   }
 
   .attendance-options {
     flex-direction: column;
-    gap: 8px;
-  }
-
-  .students-card,
-  .courses-card,
-  .results-card,
-  .attendance-card,
-  .manage-courses-card,
-  .manage-results-card,
-  .manage-attendance-card {
-    padding: 16px;
-  }
-
-  .manage-courses-card form button,
-  .manage-results-card form button {
-    width: 100%;
+    gap: 10px;
   }
 }
