@@ -17,7 +17,7 @@ import ManageCourses from "./pages/ManageCourse";
 import ManageResults from "./pages/ManageResult";
 import ManageAttendance from "./pages/ManageAttendance";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProctectedRoutes";
 
 function App() {
   return (
