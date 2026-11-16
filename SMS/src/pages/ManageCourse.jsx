@@ -14,10 +14,23 @@ function ManageCourses() {
   const [instructor, setInstructor] = useState("");
   const [credits, setCredits] = useState("");
 
+  // Token lene ka function
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("access_token");
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  };
+
   // GET courses
   const fetchCourses = async () => {
     try {
-      const response = await fetch(`${API_URL}/courses`);
+      const response = await fetch(`${API_URL}/courses`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       const data = await response.json();
 
       if (!response.ok) {
@@ -66,18 +79,14 @@ function ManageCourses() {
           `${API_URL}/courses/${editingCourse.id}`,
           {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(courseData),
           }
         );
       } else {
         response = await fetch(`${API_URL}/courses`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify(courseData),
         });
       }
@@ -108,12 +117,10 @@ function ManageCourses() {
   // Edit
   const handleEdit = (course) => {
     setEditingCourse(course);
-
     setCode(course.code);
     setName(course.name);
     setInstructor(course.instructor);
     setCredits(course.credits);
-
     setShowForm(true);
   };
 
@@ -130,6 +137,9 @@ function ManageCourses() {
     try {
       const response = await fetch(`${API_URL}/courses/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
       });
 
       const data = await response.json();
@@ -140,7 +150,6 @@ function ManageCourses() {
       }
 
       alert("Course deleted successfully!");
-
       fetchCourses();
 
     } catch (error) {
@@ -151,15 +160,12 @@ function ManageCourses() {
 
   return (
     <div className="manage-courses-page">
-
       <main className="manage-courses-content">
-
         <div className="manage-courses-header">
           <div>
             <h1>Manage Courses</h1>
             <p>Add, edit and manage courses.</p>
           </div>
-
           <button
             className="add-course-btn"
             onClick={() => {
@@ -171,12 +177,9 @@ function ManageCourses() {
           </button>
         </div>
 
-        {/* Form */}
-
         {showForm && (
           <div className="manage-courses-card">
             <form onSubmit={handleSubmit}>
-
               <div className="form-group">
                 <label>Course Code</label>
                 <input
@@ -187,7 +190,6 @@ function ManageCourses() {
                   required
                 />
               </div>
-
               <div className="form-group">
                 <label>Course Name</label>
                 <input
@@ -198,7 +200,6 @@ function ManageCourses() {
                   required
                 />
               </div>
-
               <div className="form-group">
                 <label>Instructor</label>
                 <input
@@ -209,7 +210,6 @@ function ManageCourses() {
                   required
                 />
               </div>
-
               <div className="form-group">
                 <label>Credits</label>
                 <input
@@ -220,11 +220,9 @@ function ManageCourses() {
                   required
                 />
               </div>
-
               <button type="submit">
                 {editingCourse ? "Update Course" : "Add Course"}
               </button>
-
               <button
                 type="button"
                 onClick={() => {
@@ -234,24 +232,18 @@ function ManageCourses() {
               >
                 Cancel
               </button>
-
             </form>
           </div>
         )}
 
-        {/* Courses Table */}
-
         <div className="manage-courses-card">
-
           <div className="table-container">
-
             {loading ? (
               <p>Loading courses...</p>
             ) : courses.length === 0 ? (
               <p>No courses found.</p>
             ) : (
               <table>
-
                 <thead>
                   <tr>
                     <th>Course Code</th>
@@ -261,44 +253,34 @@ function ManageCourses() {
                     <th>Actions</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {courses.map((course) => (
                     <tr key={course.id}>
-
                       <td>{course.code}</td>
                       <td>{course.name}</td>
                       <td>{course.instructor}</td>
                       <td>{course.credits}</td>
-
                       <td className="course-actions">
-
                         <button
                           className="edit-course-btn"
                           onClick={() => handleEdit(course)}
                         >
                           Edit
                         </button>
-
                         <button
                           className="delete-course-btn"
                           onClick={() => handleDelete(course.id)}
                         >
                           Delete
                         </button>
-
                       </td>
-
                     </tr>
                   ))}
                 </tbody>
-
               </table>
             )}
-
           </div>
         </div>
-
       </main>
     </div>
   );
