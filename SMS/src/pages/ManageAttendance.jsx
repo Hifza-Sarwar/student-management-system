@@ -13,6 +13,21 @@ function ManageAttendance() {
   const [attendanceStatus, setAttendanceStatus] = useState({});
   const [loading, setLoading] = useState(true);
 
+  // Token lene ka function - YEHI FIX HAI
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("access_token");
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  };
+
+  const getAuthHeaderOnly = () => {
+    return {
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    };
+  };
+
   // Get students, courses and attendance
   const fetchData = async () => {
     try {
@@ -21,9 +36,9 @@ function ManageAttendance() {
         coursesResponse,
         attendanceResponse,
       ] = await Promise.all([
-        fetch(`${API_URL}/students`),
-        fetch(`${API_URL}/courses`),
-        fetch(`${API_URL}/attendance`),
+        fetch(`${API_URL}/students`, { headers: getAuthHeaderOnly() }),
+        fetch(`${API_URL}/courses`, { headers: getAuthHeaderOnly() }),
+        fetch(`${API_URL}/attendance`, { headers: getAuthHeaderOnly() }),
       ]);
 
       const studentsData = await studentsResponse.json();
@@ -124,9 +139,7 @@ function ManageAttendance() {
             `${API_URL}/attendance/${existingRecord.id}`,
             {
               method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: getAuthHeaders(),
               body: JSON.stringify({
                 student_id: student.id,
                 course_id: Number(selectedCourse),
@@ -139,9 +152,7 @@ function ManageAttendance() {
           // Create new attendance
           await fetch(`${API_URL}/attendance`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify({
               student_id: student.id,
               course_id: Number(selectedCourse),
@@ -177,6 +188,7 @@ function ManageAttendance() {
         `${API_URL}/attendance/${id}`,
         {
           method: "DELETE",
+          headers: getAuthHeaderOnly(),
         }
       );
 
@@ -222,46 +234,32 @@ function ManageAttendance() {
 
   return (
     <div className="manage-attendance-page">
-
       <main className="manage-attendance-content">
-
-        {/* Header */}
-
         <div className="manage-attendance-header">
-
           <div>
             <h1>Manage Attendance</h1>
             <p>Mark and manage student attendance.</p>
           </div>
-
           <button
             className="save-attendance-btn"
             onClick={handleSaveAttendance}
           >
             Save Attendance
           </button>
-
         </div>
 
-        {/* Filters */}
-
         <div className="attendance-filters">
-
           <div className="filter-group">
-
             <label>Course</label>
-
             <select
               value={selectedCourse}
               onChange={(e) =>
                 setSelectedCourse(e.target.value)
               }
             >
-
               <option value="">
                 Select Course
               </option>
-
               {courses.map((course) => (
                 <option
                   key={course.id}
@@ -270,15 +268,11 @@ function ManageAttendance() {
                   {course.code} - {course.name}
                 </option>
               ))}
-
             </select>
-
           </div>
 
           <div className="filter-group">
-
             <label>Date</label>
-
             <input
               type="date"
               value={selectedDate}
@@ -286,55 +280,36 @@ function ManageAttendance() {
                 setSelectedDate(e.target.value)
               }
             />
-
           </div>
-
         </div>
 
-        {/* Attendance Table */}
-
         <div className="manage-attendance-card">
-
           <div className="table-container">
-
             {loading ? (
               <p>Loading attendance...</p>
             ) : students.length === 0 ? (
               <p>No students found.</p>
             ) : (
-
               <table>
-
                 <thead>
-
                   <tr>
                     <th>Student ID</th>
                     <th>Student Name</th>
                     <th>Attendance</th>
                   </tr>
-
                 </thead>
-
                 <tbody>
-
                   {students.map((student) => (
-
                     <tr key={student.id}>
-
                       <td>
                         {student.id}
                       </td>
-
                       <td>
                         {student.name}
                       </td>
-
                       <td>
-
                         <div className="attendance-options">
-
                           <label>
-
                             <input
                               type="radio"
                               name={`attendance-${student.id}`}
@@ -350,13 +325,9 @@ function ManageAttendance() {
                                 )
                               }
                             />
-
                             Present
-
                           </label>
-
                           <label>
-
                             <input
                               type="radio"
                               name={`attendance-${student.id}`}
@@ -372,51 +343,29 @@ function ManageAttendance() {
                                 )
                               }
                             />
-
                             Absent
-
                           </label>
-
                         </div>
-
                       </td>
-
                     </tr>
-
                   ))}
-
                 </tbody>
-
               </table>
-
             )}
-
           </div>
-
         </div>
 
-        {/* Saved Attendance */}
-
         {selectedCourse && selectedDate && (
-
           <div className="manage-attendance-card">
-
             <h2>Saved Attendance</h2>
-
             <div className="table-container">
-
               {filteredAttendance.length === 0 ? (
-
                 <p>
                   No attendance saved for this course and date.
                 </p>
-
               ) : (
-
                 <table>
-
                   <thead>
-
                     <tr>
                       <th>Student ID</th>
                       <th>Student Name</th>
@@ -425,53 +374,39 @@ function ManageAttendance() {
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
-
                   </thead>
-
                   <tbody>
-
                     {filteredAttendance.map((record) => {
-
                       const student = getStudent(
                         record.student_id
                       );
-
                       const course = getCourse(
                         record.course_id
                       );
-
                       return (
-
                         <tr key={record.id}>
-
                           <td>
                             {student
                               ? student.id
                               : record.student_id}
                           </td>
-
                           <td>
                             {student
                               ? student.name
                               : "Unknown Student"}
                           </td>
-
                           <td>
                             {course
                               ? `${course.code} - ${course.name}`
                               : "Unknown Course"}
                           </td>
-
                           <td>
                             {record.date}
                           </td>
-
                           <td>
                             {record.status}
                           </td>
-
                           <td>
-
                             <button
                               className="delete-attendance-btn"
                               onClick={() =>
@@ -480,29 +415,17 @@ function ManageAttendance() {
                             >
                               Delete
                             </button>
-
                           </td>
-
                         </tr>
-
                       );
-
                     })}
-
                   </tbody>
-
                 </table>
-
               )}
-
             </div>
-
           </div>
-
         )}
-
       </main>
-
     </div>
   );
 }

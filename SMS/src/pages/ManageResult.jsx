@@ -18,63 +18,66 @@ function ManageResults() {
   const [grade, setGrade] = useState("");
   const [semester, setSemester] = useState("");
 
+  // Token lene ka function
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("access_token");
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  };
+
+  const getAuthHeaderOnly = () => {
+    return {
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    };
+  };
+
+  // ===== MARKS SE GRADE AUTOMATIC =====
+  const calculateGrade = (marksValue) => {
+    const m = Number(marksValue);
+    if (marksValue === "" || isNaN(m)) return "";
+    if (m >= 90) return "A+";
+    if (m >= 85) return "A";
+    if (m >= 80) return "A-";
+    if (m >= 75) return "B+";
+    if (m >= 70) return "B";
+    if (m >= 65) return "C+";
+    if (m >= 60) return "C";
+    if (m >= 50) return "D";
+    return "F";
+  };
+
+  // Marks change hote hi Grade auto set ho jaye ga
+  const handleMarksChange = (e) => {
+    const value = e.target.value;
+    setMarks(value);
+    setGrade(calculateGrade(value));
+  };
+
   // Get Results, Students and Courses
-  // Get Results, Students and Courses
-const fetchData = async () => {
-  try {
-    const [resultsRes, studentsRes, coursesRes] = await Promise.all([
-      axios.get(`${API_URL}/results`),
-      axios.get(`${API_URL}/students`),
-      axios.get(`${API_URL}/courses`),
-    ]);
+  const fetchData = async () => {
+    try {
+      const [resultsRes, studentsRes, coursesRes] = await Promise.all([
+        axios.get(`${API_URL}/results`, { headers: getAuthHeaderOnly() }),
+        axios.get(`${API_URL}/students`, { headers: getAuthHeaderOnly() }),
+        axios.get(`${API_URL}/courses`, { headers: getAuthHeaderOnly() }),
+      ]);
 
-    console.log("RESULTS:", resultsRes.data);
-    console.log("STUDENTS:", studentsRes.data);
-    console.log("COURSES:", coursesRes.data);
+      setResults(resultsRes.data);
+      setStudents(studentsRes.data);
+      setCourses(coursesRes.data);
+    } catch (error) {
+      console.error("FETCH ERROR:", error);
+      alert("Unable to load results, students or courses.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    setResults(resultsRes.data);
-    setStudents(studentsRes.data);
-    setCourses(coursesRes.data);
-  } catch (error) {
-    console.error("FETCH ERROR:", error);
-    alert("Unable to load results, students or courses.");
-  } finally {
-    setLoading(false);
-  }
-};
-
-useEffect(() => {
-  fetchData();
-}, []);
-  // const fetchData = async () => {
-  //   try {
-  //     const [resultsRes, studentsRes, coursesRes] = await Promise.all([
-  //       fetch(`${API_URL}/results`),
-  //       fetch(`${API_URL}/students`),
-  //       fetch(`${API_URL}/courses`),
-  //     ]);
-
-  //     const resultsData = await resultsRes.json();
-  //     const studentsData = await studentsRes.json();
-  //     const coursesData = await coursesRes.json();
-
-  //     if (!resultsRes.ok) {
-  //       alert(resultsData.detail);
-  //       return;
-  //     }
-
-  //     setResults(resultsData);
-  //     setStudents(studentsData);
-  //     setCourses(coursesData);
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Backend server is not running");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
- 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // Clear form
   const clearForm = () => {
@@ -106,18 +109,14 @@ useEffect(() => {
           `${API_URL}/results/${editingResult.id}`,
           {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(resultData),
           }
         );
       } else {
         response = await fetch(`${API_URL}/results`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify(resultData),
         });
       }
@@ -170,6 +169,7 @@ useEffect(() => {
     try {
       const response = await fetch(`${API_URL}/results/${id}`, {
         method: "DELETE",
+        headers: getAuthHeaderOnly(),
       });
 
       const data = await response.json();
@@ -180,7 +180,6 @@ useEffect(() => {
       }
 
       alert("Result deleted successfully!");
-
       fetchData();
     } catch (error) {
       console.error(error);
@@ -200,15 +199,12 @@ useEffect(() => {
 
   return (
     <div className="manage-results-page">
-
       <main className="manage-results-content">
-
         <div className="manage-results-header">
           <div>
             <h1>Manage Results</h1>
             <p>Add, update and manage student results.</p>
           </div>
-
           <button
             className="add-result-btn"
             onClick={() => {
@@ -220,23 +216,17 @@ useEffect(() => {
           </button>
         </div>
 
-        {/* FORM */}
-
         {showForm && (
           <div className="manage-results-card">
-
             <form onSubmit={handleSubmit}>
-
               <div className="form-group">
                 <label>Student</label>
-
                 <select
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
                   required
                 >
                   <option value="">Select Student</option>
-
                   {students.map((student) => (
                     <option key={student.id} value={student.id}>
                       {student.name} - ID {student.id}
@@ -247,14 +237,12 @@ useEffect(() => {
 
               <div className="form-group">
                 <label>Course</label>
-
                 <select
                   value={courseId}
                   onChange={(e) => setCourseId(e.target.value)}
                   required
                 >
                   <option value="">Select Course</option>
-
                   {courses.map((course) => (
                     <option key={course.id} value={course.id}>
                       {course.code} - {course.name}
@@ -265,33 +253,34 @@ useEffect(() => {
 
               <div className="form-group">
                 <label>Marks</label>
-
                 <input
                   type="number"
                   min="0"
                   max="100"
                   placeholder="Enter marks"
                   value={marks}
-                  onChange={(e) => setMarks(e.target.value)}
+                  onChange={handleMarksChange}
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label>Grade</label>
-
+                <label>Grade (Auto)</label>
                 <input
                   type="text"
-                  placeholder="e.g. A"
+                  placeholder="Auto grade from marks"
                   value={grade}
-                  onChange={(e) => setGrade(e.target.value)}
+                  readOnly
+                  style={{ backgroundColor: "#f0f0f0", cursor: "not-allowed" }}
                   required
                 />
+                <small style={{ color: "#666" }}>
+                  Grade marks se automatic aye ga
+                </small>
               </div>
 
               <div className="form-group">
                 <label>Semester</label>
-
                 <input
                   type="number"
                   min="1"
@@ -315,25 +304,18 @@ useEffect(() => {
               >
                 Cancel
               </button>
-
             </form>
-
           </div>
         )}
 
-        {/* TABLE */}
-
         <div className="manage-results-card">
-
           <div className="table-container">
-
             {loading ? (
               <p>Loading results...</p>
             ) : results.length === 0 ? (
               <p>No results found.</p>
             ) : (
               <table>
-
                 <thead>
                   <tr>
                     <th>Student ID</th>
@@ -345,50 +327,37 @@ useEffect(() => {
                     <th>Actions</th>
                   </tr>
                 </thead>
-
                 <tbody>
-
                   {results.map((result) => {
-
                     const student = getStudent(result.student_id);
                     const course = getCourse(result.course_id);
-
                     return (
                       <tr key={result.id}>
-
                         <td>
                           {student
                             ? student.id
                             : result.student_id}
                         </td>
-
                         <td>
                           {student
                             ? student.name
                             : "Unknown Student"}
                         </td>
-
                         <td>
                           {course
                             ? `${course.code} - ${course.name}`
                             : "Unknown Course"}
                         </td>
-
                         <td>{result.marks}%</td>
-
                         <td>{result.grade}</td>
-
                         <td>{result.semester}</td>
-
                         <td className="result-actions">
-
                           <button
                             className="edit-result-btn"
                             onClick={() => handleEdit(result)}
                           >
                             Edit
                           </button>
-
                           <button
                             className="delete-result-btn"
                             onClick={() =>
@@ -397,24 +366,16 @@ useEffect(() => {
                           >
                             Delete
                           </button>
-
                         </td>
-
                       </tr>
                     );
                   })}
-
                 </tbody>
-
               </table>
             )}
-
           </div>
-
         </div>
-
       </main>
-
     </div>
   );
 }
