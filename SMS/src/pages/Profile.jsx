@@ -16,7 +16,7 @@ function Profile() {
     const token = localStorage.getItem("access_token");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/profile", {
+      const response = await fetch("https://student-management-system-self-five.vercel.app/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ function Profile() {
     const token = localStorage.getItem("access_token");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/profile", {
+      const response = await fetch("https://student-management-system-self-five.vercel.app/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
